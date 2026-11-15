@@ -1,0 +1,15 @@
+{
+ "UUID":"com.local.aiusagedeck","Name":"AI Usage Deck","Author":"Local Personal Tools","Version":"0.1.0.0",
+ "Description":"Local subscription quota monitor for Claude, Codex and Antigravity. No telemetry.",
+ "Category":"AI Usage Deck","CategoryIcon":"imgs/category","Icon":"imgs/plugin","CodePath":"bin/plugin.js",
+ "SDKVersion":2,"Software":{"MinimumVersion":"7.1"},"OS":[{"Platform":"windows","MinimumVersion":"10"}],"Nodejs":{"Version":"20"},
+ "PropertyInspectorPath":"ui/settings.html",
+ "Actions":[
+  {"UUID":"com.local.aiusagedeck.claude5","Name":"Claude · 5 giờ","Icon":"imgs/claude5","Tooltip":"Claude five-hour remaining quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/claude5","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]},
+  {"UUID":"com.local.aiusagedeck.claude7","Name":"Claude · Tuần","Icon":"imgs/claude7","Tooltip":"Claude weekly remaining quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/claude7","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]},
+  {"UUID":"com.local.aiusagedeck.codex5","Name":"Codex · 5 giờ","Icon":"imgs/codex5","Tooltip":"Codex five-hour remaining quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/codex5","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]},
+  {"UUID":"com.local.aiusagedeck.codex7","Name":"Codex · Tuần","Icon":"imgs/codex7","Tooltip":"Codex weekly remaining quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/codex7","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]},
+  {"UUID":"com.local.aiusagedeck.anti5","Name":"Antigravity · 5 giờ","Icon":"imgs/anti5","Tooltip":"Antigravity selected-group five-hour quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/anti5","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]},
+  {"UUID":"com.local.aiusagedeck.anti7","Name":"Antigravity · Tuần","Icon":"imgs/anti7","Tooltip":"Antigravity selected-group weekly quota. Tap: reset time. Hold: refresh.","Controllers":["Keypad"],"States":[{"Image":"imgs/anti7","ShowTitle":false,"TitleAlignment":"middle","FontSize":12}]}
+ ]
+}

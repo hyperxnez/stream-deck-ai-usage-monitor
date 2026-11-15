@@ -1,0 +1,15 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {renderKey,selectBucket} from '../dist/render.js';
+const now=Date.parse('2026-11-15T00:00:00Z');
+const bucket={groupId:'default',groupName:'All models',window:'fiveHour',remainingPercent:84,resetAt:'2026-11-15T02:00:00Z'};
+const provider={provider:'claude',state:'fresh',accountLabel:'Account A',buckets:[bucket],observedAt:'2026-11-15T00:00:00Z',lastAttemptAt:null,errorCode:null,retryAt:null,source:'test'};
+const snap=(p=provider)=>({version:1,generatedAt:new Date(now).toISOString(),providers:[p]});
+test('offline is explicit and does not show fictional zero quota',()=>{const svg=renderKey(null,{provider:'claude',window:'fiveHour'},now);assert.match(svg,/OFFLINE/);assert.doesNotMatch(svg,/>0%/);});
+test('missing window does not borrow a weekly value',()=>{const s=snap({...provider,buckets:[{...bucket,window:'sevenDay'}]});const svg=renderKey(s,{provider:'claude',window:'fiveHour'},now);assert.match(svg,/N\/A/);assert.doesNotMatch(svg,/84%/);});
+test('fresh quota is the remaining percentage',()=>{assert.match(renderKey(snap(),{provider:'claude',window:'fiveHour'},now),/84%/);});
+test('past reset is pending and never becomes 100 percent',()=>{const svg=renderKey(snap(),{provider:'claude',window:'fiveHour'},now+3*3600000);assert.match(svg,/RESET/);assert.doesNotMatch(svg,/100%/);});
+test('stale capture is visibly marked',()=>{assert.match(renderKey(snap({...provider,state:'stale'}),{provider:'claude'},now),/OLD/);});
+test('authentication error cannot display a cached percentage',()=>{const svg=renderKey(snap({...provider,state:'needsLogin'}),{provider:'claude'},now);assert.match(svg,/LOGIN/);assert.doesNotMatch(svg,/84%/);});
+test('countdown shows remaining reset time without another backend call',()=>{assert.match(renderKey(snap(),{provider:'claude'},now,true),/2h 0m/);});
+test('selected Antigravity group stays separate from other groups',()=>{const s=snap({...provider,provider:'antigravity',buckets:[{...bucket,groupId:'gemini',remainingPercent:20},{...bucket,groupId:'other',remainingPercent:90}]});assert.equal(selectBucket(s,{provider:'antigravity',group:'other',window:'fiveHour'}).remainingPercent,90);});
+test('provider labels and external group text cannot inject SVG',()=>{const svg=renderKey(snap({...provider,buckets:[{...bucket,groupName:'<script>x</script>'}]}),{provider:'claude'},now);assert.doesNotMatch(svg,/<script>/);});
