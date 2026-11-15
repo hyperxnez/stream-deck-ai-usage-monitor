@@ -41,6 +41,11 @@ internal static class EngineTests
             var now=DateTimeOffset.UtcNow;var a=new FakeAdapter();var e=new CollectorEngine([a],()=>now);await e.RefreshAsync("claude");
             a.Identity="B";a.Error=new UsageFailure("login_required","needsLogin");now=now.AddSeconds(5);await e.TickAsync();Check.Equal(0,e.GetSnapshot().Providers[0].Buckets.Count);
         })));
+        tests.Add(("Shrinking poll interval refreshes idle slot instead of staying stale",()=>Run(async()=>{
+            var now=DateTimeOffset.Parse("2026-11-15T00:00:00Z");var a=new FakeAdapter();var e=new CollectorEngine([a],()=>now){PollInterval=TimeSpan.FromSeconds(300)};
+            await e.TickAsync();Check.Equal(1,a.Calls);
+            now=now.AddSeconds(130);e.PollInterval=TimeSpan.FromSeconds(120);await e.TickAsync();Check.Equal(2,a.Calls);
+        })));
     }
     private static void Run(Func<Task> f)=>f().GetAwaiter().GetResult();
     private sealed class FakeAdapter:IUsageAdapter

@@ -6,7 +6,7 @@ let snapshot:Snapshot|null=null;
 const pressed=new PressTracker();
 type Visible={action:KeyAction<Settings>;settings:Settings;countdownUntil:number;image?:string};
 const visible=new Map<string,Visible>();
-const client=new PipeClient(s=>{snapshot=s;paint();});
+const client=new PipeClient(s=>{const first=snapshot===null&&s!==null;snapshot=s;if(first)streamDeck.logger.info('snapshot_received');paint();},ev=>streamDeck.logger.info(ev));
 function normalize(settings:Settings,defaults:Settings):Settings{
  return {provider:['claude','codex','antigravity'].includes(settings.provider??'')?settings.provider:defaults.provider,
  window:['fiveHour','sevenDay'].includes(settings.window??'')?settings.window:defaults.window,
@@ -27,13 +27,15 @@ class UsageAction extends SingletonAction<Settings>{
   await ev.action.setTitle('');paint();
  }
  override onWillDisappear(ev:WillDisappearEvent<Settings>){visible.delete(ev.action.id);pressed.remove(ev.action.id);}
- override onDidReceiveSettings(ev:DidReceiveSettingsEvent<Settings>){const item=visible.get(ev.action.id);if(item){item.settings=normalize(ev.payload.settings,this.defaults);paint();}}
+ override onDidReceiveSettings(ev:DidReceiveSettingsEvent<Settings>){const item=visible.get(ev.action.id);if(item){const next=normalize(ev.payload.settings,this.defaults);if(item.settings.provider!==next.provider)item.countdownUntil=0;item.settings=next;paint();}}
  override onKeyDown(ev:KeyDownEvent<Settings>){pressed.down(ev.action.id,Date.now());}
  override onKeyUp(ev:KeyUpEvent<Settings>){const type=pressed.up(ev.action.id,Date.now());const item=visible.get(ev.action.id);if(!item)return;
   if(type==='hold')client.refresh(item.settings.provider??'claude');else if(type==='short')item.countdownUntil=Date.now()+5000;paint();
  }
- override async onSendToPlugin(ev:SendToPluginEvent<unknown & Record<string,never>,Settings>){
-  const settings=visible.get(ev.action.id)?.settings??this.defaults;const provider=snapshot?.providers.find(p=>p.provider===settings.provider);
+ override async onSendToPlugin(ev:SendToPluginEvent<{request?:string;provider?:string},Settings>){
+  const requested=typeof ev.payload?.provider==='string'&&['claude','codex','antigravity'].includes(ev.payload.provider)?ev.payload.provider:undefined;
+  const targetProvider=requested??visible.get(ev.action.id)?.settings.provider??this.defaults.provider;
+  const provider=snapshot?.providers.find(p=>p.provider===targetProvider);
   const groups=[...new Map((provider?.buckets??[]).map(b=>[b.groupId,{id:b.groupId,name:b.groupName}])).values()];
   await streamDeck.ui.sendToPropertyInspector({groups,state:provider?.state??'offline',observedAt:provider?.observedAt??null,errorCode:provider?.errorCode??null});
  }

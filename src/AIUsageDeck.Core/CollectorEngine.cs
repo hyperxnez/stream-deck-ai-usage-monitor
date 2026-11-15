@@ -42,7 +42,8 @@ public sealed class CollectorEngine
         if(!slots.TryGetValue(provider,out var slot))return;
         var now=clock();
         lock(sync){
-            if(slot.Busy||slot.Snapshot.RetryAt>now||now-slot.LastStart<TimeSpan.FromSeconds(15)||(!force&&slot.NextAt>now))return;
+            var due=slot.NextAt<=now||(slot.Failures==0&&slot.Snapshot.ObservedAt is {} obs&&now-obs>=PollInterval&&now-slot.LastStart>=PollInterval);
+            if(slot.Busy||slot.Snapshot.RetryAt>now||now-slot.LastStart<TimeSpan.FromSeconds(15)||(!force&&!due))return;
             slot.Busy=true;slot.LastStart=now;
             slot.Snapshot=slot.Snapshot with {LastAttemptAt=now};
         }
