@@ -22,7 +22,8 @@ try{
  Copy-Item -LiteralPath (Join-Path $projectRoot 'artifacts/collector/AIUsageDeck.Collector.exe') -Destination $collectorOut -Force
  & (Join-Path $PSScriptRoot 'create-profile.ps1') -OutputDirectory $ReleaseDirectory
  Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'install.ps1'),(Join-Path $PSScriptRoot 'uninstall.ps1') -Destination $ReleaseDirectory -Force
- Copy-Item -LiteralPath (Join-Path $projectRoot 'README.md') -Destination (Join-Path $ReleaseDirectory 'HUONG-DAN.md') -Force
+ $guideSource=if(Test-Path -LiteralPath (Join-Path $projectRoot 'README.vi.md')){Join-Path $projectRoot 'README.vi.md'}else{Join-Path $projectRoot 'README.md'}
+ Copy-Item -LiteralPath $guideSource -Destination (Join-Path $ReleaseDirectory 'HUONG-DAN.md') -Force
  Push-Location 'plugin'
  try{Step 'npx.cmd' @('streamdeck','pack',$pluginOut,'--output',$ReleaseDirectory,'--force','--no-update-check','--no-file-list')}finally{Pop-Location}
  Get-ChildItem -LiteralPath $ReleaseDirectory -File | Where-Object {$_.Name -ne 'SHA256SUMS.txt'} | Get-FileHash -Algorithm SHA256 | ForEach-Object {"$($_.Hash.ToLowerInvariant())  $([IO.Path]::GetFileName($_.Path))"} | Set-Content -LiteralPath (Join-Path $ReleaseDirectory 'SHA256SUMS.txt') -Encoding utf8
