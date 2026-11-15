@@ -55,7 +55,15 @@ A local-first Windows x64 collector and **Elgato Stream Deck** plugin *(installe
 
 ---
 
-## Quick Start (Build & Install from Source)
+## Quick Start
+
+### Option 1: Install from GitHub Releases (No SDK Required)
+
+1. Download **`com.local.aiusagedeck.streamDeckPlugin`** from the [latest GitHub Release](https://github.com/hyperxnez/stream-deck-ai-usage-monitor/releases/latest).
+2. Double-click `com.local.aiusagedeck.streamDeckPlugin` to install into **Elgato Stream Deck**. *(Optional: also download `AI Usage Deck.streamDeckProfile` if using a 3×2 Stream Deck Mini, or download the full `AIUsageDeck-v*-win-x64.zip` bundle to use `install.ps1` / `uninstall.ps1`.)*
+3. Drag actions from the **AI Usage Deck** category onto your Stream Deck keys (or import `AI Usage Deck.streamDeckProfile`), then set `Provider`, `Window` (`5H` / `7D`), and `Quota Group` in the Property Inspector.
+
+### Option 2: Build & Install from Source
 
 1. **Clone the repository:**
    ```powershell
@@ -80,7 +88,7 @@ A local-first Windows x64 collector and **Elgato Stream Deck** plugin *(installe
 
 4. **Place keys on your Stream Deck:**
    - **Any Stream Deck model (15-key, XL, Mini, Neo, etc.):** Drag any of the six actions under the **AI Usage Deck** category onto a page, and pick `Provider`, `Window` (`5H` / `7D`), and `Quota Group` in the Property Inspector.
-   - **Stream Deck Mini (3×2, model `20GAI9901`):** You can optionally double-click `artifacts/release/AI Usage Deck.streamDeckProfile` to import a dedicated 6-key page without overwriting your existing profiles.
+   - **Stream Deck Mini (3×2, model `20GAI9901`):** You can optionally double-click `artifacts/release/AI Usage Deck.streamDeckProfile` (or the downloaded `.streamDeckProfile`) to import a dedicated 6-key page without overwriting your existing profiles.
 
    Suggested 3×2 layout:
 

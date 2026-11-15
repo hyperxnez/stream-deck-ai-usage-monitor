@@ -7,7 +7,7 @@ function Step([string]$Command,[string[]]$StepArgs){& $Command @StepArgs;if($LAS
 Push-Location $projectRoot
 try{
  Step 'dotnet' @('run','--project','tests/AIUsageDeck.Tests','-c','Release')
- Step 'dotnet' @('publish','src/AIUsageDeck.Collector','-c','Release','-r','win-x64','--self-contained','true','-p:PublishSingleFile=true','-p:IncludeNativeLibrariesForSelfExtract=true','-o','artifacts/collector')
+ Step 'dotnet' @('publish','src/AIUsageDeck.Collector','-c','Release','-r','win-x64','--self-contained','true','-p:PublishSingleFile=true','-p:IncludeNativeLibrariesForSelfExtract=true','-p:DebugType=none','-p:DebugSymbols=false','-p:Deterministic=true',"-p:PathMap=$projectRoot=/_",'-o','artifacts/collector')
  Push-Location 'plugin'
  try{
   Step 'npm.cmd' @('ci','--ignore-scripts','--no-fund','--no-audit')

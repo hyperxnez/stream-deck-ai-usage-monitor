@@ -7,8 +7,9 @@ Plugin Elgato Stream Deck và local collector trên Windows x64 *(hiển thị t
 ## Cài đặt và sử dụng
 
 1. Cài và đăng nhập sẵn ít nhất một trong các CLI: Claude Code CLI, Codex CLI, hoặc Antigravity CLI (`agy`).
-2. **Tải bản release hoặc tự build:**
-   - Tự build từ mã nguồn: chạy `./scripts/build.ps1` (yêu cầu .NET 10 SDK và Node.js 20+). Kết quả nằm trong `artifacts/release/`.
+2. **Tải bản dựng sẵn hoặc tự build:**
+   - **Dùng bản dựng sẵn (khuyên dùng):** Tải `com.local.aiusagedeck.streamDeckPlugin` từ [GitHub Releases](https://github.com/hyperxnez/stream-deck-ai-usage-monitor/releases/latest) (hoặc tải trọn bộ `AIUsageDeck-v*-win-x64.zip` nếu muốn dùng script `install.ps1`/`uninstall.ps1`).
+   - **Tự build từ mã nguồn:** Chạy `./scripts/build.ps1` (yêu cầu .NET 10 SDK và Node.js 20+). Kết quả nằm trong `artifacts/release/`.
 3. **Cài plugin:**
    - Mở đúp `com.local.aiusagedeck.streamDeckPlugin` bằng Stream Deck để cài. *(Bản dùng cá nhân không có chữ ký nhà phát hành.)*
    - Hoặc đóng Stream Deck, chạy `install.ps1` trong thư mục release rồi mở lại Stream Deck. Nếu đã có bản cũ, script tự sao lưu bản cũ vào `%LOCALAPPDATA%\AIUsageDeck\Backups\`.
