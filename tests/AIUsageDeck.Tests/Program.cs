@@ -3,6 +3,9 @@ using System.Text.Json;
 
 var tests = new List<(string Name, Action Run)>();
 ParserTests.Add(tests);
+EngineTests.Add(tests);
+IpcTests.Add(tests);
+AdapterTests.Add(tests);
 var failures = 0;
 foreach (var (name, run) in tests)
 {

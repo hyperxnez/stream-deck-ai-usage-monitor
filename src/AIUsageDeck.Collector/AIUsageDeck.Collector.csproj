@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><AssemblyName>AIUsageDeck.Collector</AssemblyName></PropertyGroup><ItemGroup><ProjectReference Include="../AIUsageDeck.Core/AIUsageDeck.Core.csproj" /></ItemGroup></Project>
