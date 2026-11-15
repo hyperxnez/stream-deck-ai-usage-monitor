@@ -1,8 +1,8 @@
-# AI Usage Deck (Hướng dẫn Tiếng Việt)
+# Stream Deck AI Usage Monitor (AI Usage Deck)
 
 [English README](README.md)
 
-Công cụ riêng trên Windows x64: theo dõi hạn mức **còn lại** (`%`) và thời điểm reset cho **Claude**, **Codex** và **Antigravity** trên Elgato Stream Deck. Toàn bộ collector và plugin chạy cục bộ trên máy; không gửi prompt AI, không tốn token, không telemetry hay backend cloud.
+Plugin Elgato Stream Deck và local collector trên Windows x64 *(hiển thị trong app Stream Deck với tên **AI Usage Deck**)* để theo dõi hạn mức **còn lại** (`%`, cửa sổ `5H` & `7D`) và thời điểm reset cho **Claude Code**, **OpenAI Codex (ChatGPT)** và **Antigravity (`agy`)**. Toàn bộ tiến trình chạy cục bộ trên máy; không gửi prompt AI, không tốn token, không telemetry hay backend cloud.
 
 ## Cài đặt và sử dụng
 

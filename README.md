@@ -1,8 +1,8 @@
-# AI Usage Deck
+# Stream Deck AI Usage Monitor
 
 [Tiếng Việt (Vietnamese Guide)](README.vi.md)
 
-A local-first Windows x64 collector and Elgato Stream Deck plugin for monitoring **remaining** subscription quota and reset times across **Claude**, **Codex**, and **Antigravity** — without sending model prompts, burning tokens, or relying on any cloud backend.
+A local-first Windows x64 collector and **Elgato Stream Deck** plugin *(installed in Stream Deck as **AI Usage Deck**)* for monitoring **remaining** subscription usage quotas (`5H` & `7D`) and reset times across **Claude Code**, **OpenAI Codex (ChatGPT)**, and **Antigravity (`agy`)** — with zero model prompts, zero token burn, and zero cloud backend.
 
 ---
 
@@ -59,8 +59,8 @@ A local-first Windows x64 collector and Elgato Stream Deck plugin for monitoring
 
 1. **Clone the repository:**
    ```powershell
-   git clone https://github.com/hyperxnez/ai-usage-deck.git
-   cd ai-usage-deck
+   git clone https://github.com/hyperxnez/stream-deck-ai-usage-monitor.git
+   cd stream-deck-ai-usage-monitor
    ```
 
 2. **Build, test, and package a local release:**
@@ -104,7 +104,7 @@ A local-first Windows x64 collector and Elgato Stream Deck plugin for monitoring
 ## Architecture
 
 ```text
-ai-usage-deck/
+stream-deck-ai-usage-monitor/
 ├── src/
 │   ├── AIUsageDeck.Core/          # Shared quota models, parsers, CollectorEngine (scheduler/backoff/identity)
 │   └── AIUsageDeck.Collector/     # Windows x64 service: adapters, ACL snapshot store, named-pipe NDJSON server
